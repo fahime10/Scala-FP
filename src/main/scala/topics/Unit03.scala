@@ -26,6 +26,7 @@ object Unit03 {
     lazy val d = wordList.init.init.init.init.init.init.init.init.head
     lazy val e = wordList.init.last
     lazy val f = wordList.last
+
     println(a)
     println(b)
     println(c)
@@ -57,6 +58,7 @@ object Unit03 {
     lazy val d = (intList take 4) :: List(intList drop 4)
     lazy val e = (intList take 9) :: List(intList drop 9)
     lazy val f = (intList drop 10) :: List(intList take 10)
+
     println(a)
     println(b)
     println(c)
@@ -92,6 +94,7 @@ object Unit03 {
     lazy val g = wordList.map(_.contains('o'))
     lazy val h = wordList.map(_.toUpperCase())
     lazy val i = wordList.map(_.toList)
+
     println(a)
     println(b)
     println(c)
@@ -124,7 +127,8 @@ object Unit03 {
 
   @main
   def Exercise34(): Unit =
-    lazy val a = charList.takeWhile(_ < 'b') ::: charList.takeWhile(_ < 'b')
+    //lazy val a = charList.takeWhile(_ < 'b') ::: charList.takeWhile(_ < 'b')
+    lazy val a = aardvark.takeWhile(_ == 'a')
     lazy val b = aardvark.dropWhile(_ == 'a')
     lazy val c = charList.filter(_ == 'a')
     lazy val d = intList.filter(_ % 3 == 0)
@@ -137,7 +141,7 @@ object Unit03 {
     //lazy val h = wordList.filter(_ == "the") ::: wordList.filter(_ == "lazy") ::: wordList.filter(_ == "dog")
     lazy val h = wordList.dropWhile(_ != "the")
     lazy val i = charList.dropWhile(_ < 'x')
-    lazy val j = intList.filter(k => k % 2 == 0 || k% 3 == 0)
+    lazy val j = intList.filter(k => k % 2 == 0 || k % 3 == 0)
 
     println(a)
     println(b)
@@ -203,10 +207,17 @@ object Unit03 {
 
   def groupInto[A](size: Int, xs: List[A]): List[List[A]] =
     //xs match
-//    case List() => Nil
-//    case x :: _ => List(xs.take(size)) ::: groupInto(size, xs.drop(size))
+    //case List() => Nil
+    //case x :: _ => List(xs.take(size)) ::: groupInto(size, xs.drop(size))
       val blocks = (xs.indices by size).toList
       blocks.map(k => xs.drop(k)).map(_.take(size))
+      //if size = 4
+      //blocks.map(0 => xs.drop(0)).map(_.take(4)) is taking the first 4
+      //blocks.map(4 => xs.drop(4)).map(_.take(4)) is dropping the first 4, but taking the next 4 after it
+      //blocks.map(8 => xs.drop(8)).map(_.take(4)) is dropping the first 8, but taking the next 4 and so on
+      //
+      //So, for each number in List(0, 4, 8), which is produced by using (xs.indices by size).toList, it
+      // creates a list, making a list of lists
 
 
   @main
@@ -262,17 +273,17 @@ object Unit03 {
    */
 
   def packetReverse[A](size: Int, xs: List[A]): List[A] =
+    groupInto(size, xs).flatMap(_.reverse)
     //xs match {
-//    case List() => Nil
-//    case x :: _ => groupInto(size, xs.take(size).reverse).flatten
-      groupInto(size, xs).flatMap(_.reverse)
-  //}
+    //case List() => Nil
+    //case x :: _ => groupInto(size, xs.take(size).reverse).flatten
+    //}
 
   def tabulate(width: Int, xs: List[Int]): String =
     val elements = xs.map(k => s"<td>$k</td>") // number is wrapped
     val rows = groupInto(width, elements)
       .map(_.mkString)
-      .map(r => "<tr>" + r + "</tr>") //list of rows
+      .map(r => "<tr>" + r + "</tr>") //list of rows, maps each td inside tr
     "<table>" + rows.mkString + "</table>" //compress rows into a string
 
   @main
@@ -307,6 +318,15 @@ object Unit03 {
     case y :: ys =>
       val (less, more) = ys partition (_ <= y)
       qsort(less) ::: y :: qsort(more)
+      //To obtain less and more, the tail of the list is partitioned in 2, on the left we have values smaller
+      //than the head, which is the "less", and then the "more" is part of the list after the head
+      //(on the right).
+      //
+      //qsort function is then applied with the same principle on the left hand side and it is dealt with first.
+      //After all the necessary recursions, it is then applied on the right hand side.
+      //We end up with a sorted list on qsort(less), then concatenate with the head, then a sorted list on
+      //qsort(more)
+
 
   /**
    * Generates a list of k random alphanumeric characters
@@ -322,7 +342,7 @@ object Unit03 {
     case (xs, List()) => xs
     case (x :: xs, y :: ys) =>
       if (x < y)
-        x::merge(xs, y :: ys)
+        x :: merge(xs, y :: ys)
       else
         y :: merge(x :: xs, ys)
 
@@ -332,13 +352,32 @@ object Unit03 {
     else
       val (ys, zs) = xs.splitAt(xs.length / 2)
       merge(msort(ys), msort(zs))
+      //if xs = 83aQ
+      //ys = 83 and zs = aQ
+      //merge(msort(83), msort(aQ))
+      //
+      //left merge first, xs = 83
+      //ys = 8 and zs = 3
+      //merge(msort(8), msort(3))
+      //merge(8, 3)
+      //38
+      //
+      //right merge, xs = aQ
+      //ys = a and zs = Q
+      //merge(msort(a), msort(Q))
+      //merge(a, Q)
+      //Qa
+      //
+      //merge the two
+      //38Qa
 
   @main
   def Exercise38(): Unit =
-    val rs = random(100)
+    val rs = random(4)
     println(rs.mkString)
     println(qsort(rs).mkString)
     println(msort(rs).mkString)
+
 
   /*
   * Exercise 39

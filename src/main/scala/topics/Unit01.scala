@@ -172,11 +172,6 @@ object Unit01 {
   // behaves like octo but is defined using composition
   val octo2: (Int => Int) => (Int => Int) = f => f compose f compose f compose f compose f compose f compose f compose f
 
-  //  val thrice: (Int => Int) => (Int => Int) = ???
-  //  val thrice2: (Int => Int) => (Int => Int) = ???
-  //  val octo: (Int => Int) => (Int => Int) = ???
-  //  val octo2: (Int => Int) => (Int => Int) = ???
-
   @main def exercise17(): Unit =
     println(twice(incr)(3))
     println(twice2(dbl)(3))
@@ -187,7 +182,7 @@ object Unit01 {
     //objects can be the same, but not functions
     println(twice == twice2)
     //these are not objects, juts testing the integer output
-    println((twice(incr)(4)) == (twice2(incr)(4)))
+    println(twice(incr)(4) == twice2(incr)(4))
 
 
 

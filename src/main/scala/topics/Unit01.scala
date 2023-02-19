@@ -118,8 +118,8 @@ object Unit01 {
     println(nums.map(2 * _))
     println(nums.map(balance(_)(6)))
     println(nums.map(mul(_)(2) + 1))
-    println(nums.map(halve(_)))
-    println(nums.map(negate(_)))
+    println(nums.map(halve))
+    println(nums.map(negate))
     println(nums.map(_ < 6))
     println(nums.map(_ % 2))
 

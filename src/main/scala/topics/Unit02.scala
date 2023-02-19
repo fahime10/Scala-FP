@@ -101,14 +101,14 @@ object Unit02 {
       -1
       else
       @tailrec
-      def loopTR(i: Int, smallIndex: Int): Int =
+      def loopTR(i: Int, s: Int): Int =
         if i < length then
-          if xs(i) < xs(smallIndex) then
+          if xs(i) < xs(s) then
             loopTR(i + 1, i)
           else
-          loopTR(i + 1, smallIndex)
+          loopTR(i + 1, s)
         else
-          smallIndex
+          s
 
       loopTR(from + 1, from)
 
@@ -119,13 +119,13 @@ object Unit02 {
       val length = xs.length
 
       @tailrec
-      def loop(start: Int): Unit =
-        if start < length then
-          val small = findIndexOfSmallestTR(xs, start)
-          val newValueSmall = xs(small)
-          xs(small) = xs(start)
-          xs(start) = newValueSmall
-          loop(start + 1)
+      def loop(s: Int): Unit =
+        if s < length then
+          val indexOfSmallest = findIndexOfSmallestTR(xs, s)
+          val newValueSmall = xs(indexOfSmallest)
+          xs(indexOfSmallest) = xs(s)
+          xs(s) = newValueSmall
+          loop(s + 1)
 
       loop(0)
 
@@ -135,6 +135,10 @@ object Unit02 {
     var nums: ListBuffer[Int] = ListBuffer(8, 4, 0, 7, 3, 5, 1, 9, 6, 2)
     selectionSortTR(nums)
     println(nums)
+    println()
+    var nums2: ListBuffer[Int] = ListBuffer(8, 4, 0, 7, 3, 5, 1, 9, 6, 2, 5, 6, 2, 1, 0, 4, 9)
+    selectionSortTR(nums2)
+    println(nums2)
 
   /* Exercise 24 code */
 
@@ -323,12 +327,6 @@ object Unit02 {
     case (Succ(k), Succ(l)) => sub(k)(l)
   }
 
-//  def div(m: Num)(n: Num): Num = (m, n) match {
-//    case (_, Zero) => throw new ArithmeticException("Cannot divide by zero")
-//    case (Zero, _) => Zero
-//    case (Succ(k), Succ(l)) => sub(div(k)(l))(l)
-//  }
-
   def pwr(n: Num)(p: Num): Num = (n, p) match {
     case (_, Zero) => Succ(Zero)
     case (Zero, _) => Zero
@@ -365,8 +363,6 @@ object Unit02 {
     println(gt(three)(two))
     println()
     println(three > ten)
-    println()
-//    println(div(four)(two))
 }
 
 /*

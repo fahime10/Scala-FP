@@ -1,0 +1,5 @@
+1 10 CTEC1901 Computational Modelling Lecture GH3.13
+1 15 CTEC1901 Computational Modelling Lecture GH3.13
+1 15 Optional Industrial Placement Seminar Q1.12
+2 09 CTEC3904 Functional Software Programming GH6.82
+2 13 CTEC3904 Functional Software Programming GH6.81

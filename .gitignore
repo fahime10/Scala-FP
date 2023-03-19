@@ -3,3 +3,4 @@
 /project/*
 /target/*
 build.sbt
+/src/main/scala/applications/MyCalendar.scala

@@ -4,3 +4,4 @@
 /target/*
 build.sbt
 /src/main/scala/applications/MyCalendar.scala
+/dat/events.txt
